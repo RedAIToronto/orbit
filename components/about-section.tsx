@@ -9,7 +9,7 @@ export function AboutSection() {
   })
 
   return (
-    <section ref={ref} className="w-full max-w-6xl mx-auto px-4 py-24">
+    <section id="about" ref={ref} className="w-full max-w-6xl mx-auto px-4 py-24">
       <div className={`grid md:grid-cols-2 gap-12 items-center ${
         inView ? 'animate-fade-in' : 'opacity-0'
       }`}>
@@ -48,7 +48,7 @@ export function AboutSection() {
           <div className="prose prose-invert max-w-none space-y-4">
             <p className="text-lg text-white/90">
               ORBIT is the endgame abstraction layer for autonomous AI agents. Built on 
-              Sphere One's decentralized infrastructure, we've unified 178 agents, 116 blockchains, 
+              Sphere One&apos;s decentralized infrastructure, we&apos;ve unified 178 agents, 116 blockchains, 
               and 10 LLM models into a single, powerful intelligence network.
             </p>
             <p className="text-lg text-white/90">
@@ -58,7 +58,7 @@ export function AboutSection() {
             </p>
             <div className="bg-[#00ffff]/10 border border-[#00ffff]/30 p-4 rounded-lg">
               <p className="text-[#00ffff] font-pixel">
-                "All agents. All chains. All models. One unified intelligence."
+                &ldquo;All agents. All chains. All models. One unified intelligence.&rdquo;
               </p>
               <p className="text-white/70 text-sm mt-2">- ORBIT AI</p>
             </div>

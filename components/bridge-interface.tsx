@@ -4,16 +4,25 @@ import { useState } from 'react'
 import { ArrowUpDown, Loader } from 'lucide-react'
 import Image from 'next/image'
 import { WalletConnector } from './wallet-connector'
+import type { Chains } from '@/types'
 
 export function BridgeInterface() {
-  const [isInitializing, setIsInitializing] = useState(true)
+  const [isInitializing] = useState(true)
   const [fromAmount, setFromAmount] = useState('')
-  const [selectedToChain, setSelectedToChain] = useState('ethereum')
+  const [selectedToChain, setSelectedToChain] = useState<keyof Chains>('ethereum')
 
-  const chains = {
+  const chains: Chains = {
     ethereum: { name: 'Ethereum', icon: 'Ξ', color: 'text-[#627EEA]' },
     bsc: { name: 'BSC', icon: 'BNB', color: 'text-[#F3BA2F]' },
     arbitrum: { name: 'Arbitrum', icon: 'ARB', color: 'text-[#28A0F0]' }
+  }
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFromAmount(e.target.value)
+  }
+
+  const handleChainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedToChain(e.target.value as keyof Chains)
   }
 
   return (
@@ -33,7 +42,7 @@ export function BridgeInterface() {
                 type="number"
                 placeholder="0.0"
                 value={fromAmount}
-                onChange={(e) => setFromAmount(e.target.value)}
+                onChange={handleAmountChange}
                 className="bg-transparent text-white text-2xl outline-none w-full"
                 disabled={isInitializing}
               />
@@ -79,7 +88,7 @@ export function BridgeInterface() {
               <select 
                 className="border border-white/20 text-white font-pixel px-3 py-1 rounded backdrop-blur-sm"
                 value={selectedToChain}
-                onChange={(e) => setSelectedToChain(e.target.value)}
+                onChange={handleChainChange}
                 disabled={isInitializing}
               >
                 {Object.entries(chains).map(([key, chain]) => (

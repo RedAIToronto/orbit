@@ -28,10 +28,19 @@ export function NavBar() {
           >
             X @orbitcryptoai
           </Link>
-          <Link href="#" className="hover:text-[#00ffff] transition-all">
+          <Link 
+            href="/#about" 
+            className="hover:text-[#00ffff] transition-all"
+            scroll={false}
+          >
             About
           </Link>
-          <Link href="#" className="hover:text-[#00ffff] transition-all">
+          <Link 
+            href="https://solscan.io/account/FuuufJNqmoWr2M4JiA7FFM5yKF6DgRpyLSMMwXhCYggQ"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#00ffff] transition-all"
+          >
             Wallet
           </Link>
           <Link href="/bridge" className="hover:text-[#00ffff] transition-all">

@@ -9,13 +9,13 @@ export function AboutSection() {
   })
 
   return (
-    <section id="about" ref={ref} className="w-full max-w-6xl mx-auto px-4 py-24">
+    <section id="about-section" ref={ref} className="w-full max-w-6xl mx-auto px-4 py-24 scroll-mt-24">
       <div className={`grid md:grid-cols-2 gap-12 items-center ${
         inView ? 'animate-fade-in' : 'opacity-0'
       }`}>
         {/* Left Column - Tech Stats */}
         <div className="space-y-8">
-          <h2 className="font-pixel text-[#00ffff] text-4xl mb-8 drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]">
+          <h2 id="system-metrics" className="font-pixel text-[#00ffff] text-4xl mb-8 drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]">
             SYSTEM METRICS
           </h2>
           <div className="space-y-4">
@@ -42,7 +42,7 @@ export function AboutSection() {
         <div className={`space-y-6 transform transition-all duration-700 delay-500
           ${inView ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
         >
-          <h2 className="font-pixel text-[#00ffff] text-4xl drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]">
+          <h2 id="about-orbit" className="font-pixel text-[#00ffff] text-4xl drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]">
             ABOUT ORBIT
           </h2>
           <div className="prose prose-invert max-w-none space-y-4">

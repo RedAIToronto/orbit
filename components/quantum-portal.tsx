@@ -3,6 +3,14 @@
 import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 
+interface Particle {
+  x: number
+  y: number
+  size: number
+  speed: number
+  angle: number
+}
+
 export function QuantumPortal() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const router = useRouter()
@@ -17,7 +25,7 @@ export function QuantumPortal() {
     canvas.width = canvas.offsetWidth
     canvas.height = canvas.offsetHeight
 
-    const particles: { x: number; y: number; size: number; speed: number; angle: number }[] = []
+    const particles: Particle[] = []
     const particleCount = 200
     const maxSize = 2
     const centerX = canvas.width / 2
@@ -40,6 +48,7 @@ export function QuantumPortal() {
     let frame = 0
 
     function drawParticle(x: number, y: number, size: number) {
+      if (!ctx) return
       ctx.beginPath()
       const gradient = ctx.createRadialGradient(x, y, 0, x, y, size)
       gradient.addColorStop(0, `hsla(${hue}, 100%, 50%, 1)`)
@@ -50,6 +59,7 @@ export function QuantumPortal() {
     }
 
     function animate() {
+      if (!ctx || !canvas) return
       ctx.fillStyle = 'transparent'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
@@ -81,6 +91,7 @@ export function QuantumPortal() {
     animate()
 
     const handleResize = () => {
+      if (!canvas) return
       canvas.width = canvas.offsetWidth
       canvas.height = canvas.offsetHeight
     }

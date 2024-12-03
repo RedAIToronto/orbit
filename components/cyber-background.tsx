@@ -2,6 +2,14 @@
 
 import { useEffect, useRef } from 'react'
 
+interface Particle {
+  x: number
+  y: number
+  speed: number
+  size: number
+  color: string
+}
+
 export function CyberBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -15,13 +23,7 @@ export function CyberBackground() {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
-    const particles: {
-      x: number
-      y: number
-      speed: number
-      size: number
-      color: string
-    }[] = []
+    const particles: Particle[] = []
 
     for (let i = 0; i < 50; i++) {
       particles.push({
@@ -34,6 +36,7 @@ export function CyberBackground() {
     }
 
     function drawParticle(x: number, y: number, size: number, color: string) {
+      if (!ctx) return
       ctx.beginPath()
       ctx.moveTo(x, y)
       ctx.lineTo(x + size, y + size)
@@ -43,6 +46,7 @@ export function CyberBackground() {
     }
 
     function animate() {
+      if (!ctx || !canvas) return
       ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
@@ -61,6 +65,7 @@ export function CyberBackground() {
     animate()
 
     const handleResize = () => {
+      if (!canvas) return
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
     }

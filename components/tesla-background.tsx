@@ -16,8 +16,7 @@ export function TeslaBackground() {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
+    const ctx = canvas.getContext('2d')!
 
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
@@ -34,7 +33,6 @@ export function TeslaBackground() {
     }
 
     function drawParticle(x: number, y: number, size: number) {
-      if (!ctx) return
       ctx.beginPath()
       ctx.moveTo(x, y)
       ctx.lineTo(x + size, y + size)
@@ -43,7 +41,6 @@ export function TeslaBackground() {
     }
 
     function animate() {
-      if (!ctx || !canvas) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       particles.forEach(particle => {
@@ -61,7 +58,6 @@ export function TeslaBackground() {
     animate()
 
     const handleResize = () => {
-      if (!canvas) return
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
     }

@@ -11,10 +11,10 @@ export function VideoPlayer() {
   // Preload the next video
   useEffect(() => {
     const nextVideo = nextVideoRef.current
-    if (nextVideo) {
-      nextVideo.src = currentVideo === '/vid1.mp4' ? '/talk.mp4' : '/vid1.mp4'
-      nextVideo.load()
-    }
+    if (!nextVideo) return
+
+    nextVideo.src = currentVideo === '/vid1.mp4' ? '/talk.mp4' : '/vid1.mp4'
+    nextVideo.load()
   }, [currentVideo])
 
   useEffect(() => {
@@ -39,11 +39,22 @@ export function VideoPlayer() {
       setTimeout(() => {
         setCurrentVideo(prev => prev === '/vid1.mp4' ? '/talk.mp4' : '/vid1.mp4')
         setIsGlitching(false)
+
+        // Ensure video plays after source change
+        const currentVideo = videoRef.current
+        if (currentVideo) {
+          currentVideo.load()
+          currentVideo.play().catch(error => {
+            console.warn('Video autoplay failed:', error)
+          })
+        }
       }, 800)
     }
 
     video.addEventListener('ended', handleEnded)
-    return () => video.removeEventListener('ended', handleEnded)
+    return () => {
+      video.removeEventListener('ended', handleEnded)
+    }
   }, [])
 
   return (
@@ -64,10 +75,10 @@ export function VideoPlayer() {
         <div className="relative">
           <video
             ref={videoRef}
-            className={`w-full aspect-video ${isGlitching ? 'animate-glitch' : ''}`}
+            className={`w-full aspect-video ${isGlitching ? 'glitch' : ''}`}
             autoPlay
             playsInline
-            loop
+            muted
             src={currentVideo}
           />
           {/* Hidden video for preloading */}
@@ -75,6 +86,7 @@ export function VideoPlayer() {
             ref={nextVideoRef}
             className="hidden"
             preload="auto"
+            muted
           />
         </div>
       </div>

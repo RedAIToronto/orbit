@@ -62,16 +62,6 @@ export function AboutSection() {
               </p>
               <p className="text-white/70 text-sm mt-2">- ORBIT AI</p>
             </div>
-            <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
-              <div className="bg-black/40 p-3 rounded border border-[#00ffff]/30">
-                <span className="text-[#00ffff] font-pixel block mb-1">Infrastructure</span>
-                <span className="text-white/80">Powered by Sphere One</span>
-              </div>
-              <div className="bg-black/40 p-3 rounded border border-[#00ffff]/30">
-                <span className="text-[#00ffff] font-pixel block mb-1">Integration</span>
-                <span className="text-white/80">All in One Place</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>

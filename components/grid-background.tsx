@@ -26,7 +26,7 @@ export function GridBackground() {
         const offset = (frame + x) % gridSize
         ctx.beginPath()
         for (let y = 0; y < height + gridSize; y += gridSize) {
-          const z = (y + offset) / height
+          const yOffset = (y + offset) / height
           const projected_x = x + Math.sin(frame * 0.01 + y * 0.01) * 20
 
           ctx.lineTo(projected_x, y)
@@ -39,7 +39,7 @@ export function GridBackground() {
         const offset = (frame + y) % gridSize
         ctx.beginPath()
         for (let x = 0; x < width + gridSize; x += gridSize) {
-          const z = (x + offset) / width
+          const xOffset = (x + offset) / width
           const projected_y = y + Math.sin(frame * 0.01 + x * 0.01) * 20
 
           ctx.lineTo(x, projected_y)

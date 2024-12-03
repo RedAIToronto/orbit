@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Wallet, Loader } from 'lucide-react'
-import { PhantomIcon, MetaMaskIcon, WalletConnectIcon } from './wallet-icons'
+import { PhantomIcon, WalletConnectIcon } from './wallet-icons'
 import { useWallet } from '@/hooks/use-wallet'
 
 const WALLETS = [
@@ -11,12 +11,6 @@ const WALLETS = [
     name: 'Phantom',
     icon: PhantomIcon,
     color: '#AB9FF2'
-  },
-  {
-    id: 'metamask',
-    name: 'MetaMask',
-    icon: MetaMaskIcon,
-    color: '#F6851B'
   },
   {
     id: 'walletconnect',

@@ -4,14 +4,6 @@ import { OrbitLogo } from "./orbit-logo"
 import Link from "next/link"
 
 export function NavBar() {
-  const scrollToAbout = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    const aboutSection = document.getElementById('about-section')
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
   return (
     <div className="flex flex-col items-center gap-6 p-4">
       <Link href="/" className="absolute left-4 top-4 hover:opacity-80 transition-opacity">

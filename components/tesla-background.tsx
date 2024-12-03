@@ -17,16 +17,15 @@ export function TeslaBackground() {
     if (!canvas) return
 
     const ctx = canvas.getContext('2d')!
-
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    const width = canvas.width = window.innerWidth
+    const height = canvas.height = window.innerHeight
 
     const particles: Particle[] = []
 
     for (let i = 0; i < 50; i++) {
       particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
+        x: Math.random() * width,
+        y: Math.random() * height,
         speed: Math.random() * 2 + 1,
         size: Math.random() * 2 + 1
       })
@@ -41,14 +40,14 @@ export function TeslaBackground() {
     }
 
     function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.clearRect(0, 0, width, height)
 
       particles.forEach(particle => {
         drawParticle(particle.x, particle.y, particle.size)
         particle.y += particle.speed
-        if (particle.y > canvas.height) {
+        if (particle.y > height) {
           particle.y = 0
-          particle.x = Math.random() * canvas.width
+          particle.x = Math.random() * width
         }
       })
 

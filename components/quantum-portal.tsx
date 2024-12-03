@@ -9,6 +9,8 @@ interface Particle {
   size: number
   speed: number
   angle: number
+  pulse: number
+  opacity: number
 }
 
 export function QuantumPortal() {
@@ -26,28 +28,31 @@ export function QuantumPortal() {
     const centerY = height / 2
 
     const particles: Particle[] = []
-    const particleCount = 200
-    const maxSize = 2
+    const particleCount = 300
+    const maxSize = 3
 
-    // Create particles in a circular pattern
+    // Create particles in a spiral pattern
     for (let i = 0; i < particleCount; i++) {
       const angle = (Math.PI * 2 / particleCount) * i
-      const radius = Math.random() * 100 + 50
+      const radius = Math.random() * 150 + 30
       particles.push({
         x: centerX + Math.cos(angle) * radius,
         y: centerY + Math.sin(angle) * radius,
         size: Math.random() * maxSize,
         speed: Math.random() * 2 + 1,
-        angle: angle
+        angle: angle,
+        pulse: Math.random() * Math.PI * 2,
+        opacity: Math.random() * 0.5 + 0.5
       })
     }
 
     let hue = 0
     let frame = 0
+    let portalPulse = 0
 
-    function drawParticle(x: number, y: number, size: number) {
+    function drawParticle(x: number, y: number, size: number, opacity: number) {
       const gradient = ctx.createRadialGradient(x, y, 0, x, y, size)
-      gradient.addColorStop(0, `hsla(${hue}, 100%, 50%, 1)`)
+      gradient.addColorStop(0, `hsla(${hue}, 100%, 50%, ${opacity})`)
       gradient.addColorStop(1, `hsla(${hue}, 100%, 50%, 0)`)
       ctx.fillStyle = gradient
       ctx.beginPath()
@@ -55,30 +60,61 @@ export function QuantumPortal() {
       ctx.fill()
     }
 
+    function drawPortalCore() {
+      const coreSize = 50 + Math.sin(portalPulse) * 10
+      const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, coreSize)
+      gradient.addColorStop(0, `hsla(${hue}, 100%, 70%, 0.3)`)
+      gradient.addColorStop(0.5, `hsla(${hue}, 100%, 50%, 0.2)`)
+      gradient.addColorStop(1, `hsla(${hue}, 100%, 30%, 0)`)
+      
+      ctx.fillStyle = gradient
+      ctx.beginPath()
+      ctx.arc(centerX, centerY, coreSize, 0, Math.PI * 2)
+      ctx.fill()
+    }
+
     function animate() {
       ctx.fillStyle = 'transparent'
       ctx.fillRect(0, 0, width, height)
 
+      // Draw portal core
+      drawPortalCore()
+
+      // Update and draw particles
       particles.forEach(particle => {
+        // Spiral motion
         particle.angle += 0.02
-        particle.x = centerX + Math.cos(particle.angle) * (100 + Math.sin(frame * 0.02) * 30)
-        particle.y = centerY + Math.sin(particle.angle) * (100 + Math.sin(frame * 0.02) * 30)
+        const radiusOffset = Math.sin(frame * 0.02) * 30
+        const baseRadius = 100 + Math.sin(particle.pulse + frame * 0.05) * 20
         
-        drawParticle(particle.x, particle.y, particle.size)
+        particle.x = centerX + Math.cos(particle.angle) * (baseRadius + radiusOffset)
+        particle.y = centerY + Math.sin(particle.angle) * (baseRadius + radiusOffset)
+        
+        // Update pulse and opacity
+        particle.pulse += 0.05
+        particle.opacity = 0.5 + Math.sin(particle.pulse) * 0.3
+
+        drawParticle(particle.x, particle.y, particle.size, particle.opacity)
       })
 
+      // Draw quantum connections
       ctx.beginPath()
       ctx.strokeStyle = `hsla(${hue}, 100%, 50%, 0.1)`
       particles.forEach((particle, i) => {
         if (i % 3 === 0) {
+          const lineOpacity = 0.1 + Math.sin(particle.pulse) * 0.05
+          ctx.strokeStyle = `hsla(${hue}, 100%, 50%, ${lineOpacity})`
+          ctx.beginPath()
           ctx.moveTo(particle.x, particle.y)
           ctx.lineTo(centerX, centerY)
+          ctx.stroke()
         }
       })
-      ctx.stroke()
 
       hue = (hue + 0.5) % 360
       frame++
+      portalPulse += 0.05
+
       requestAnimationFrame(animate)
     }
 

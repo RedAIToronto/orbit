@@ -4,26 +4,39 @@ import { useEffect, useRef, useState } from 'react'
 
 export function VideoPlayer() {
   const [currentVideo, setCurrentVideo] = useState('/vid1.mp4')
+  const [currentAudio, setCurrentAudio] = useState('/1.mp3')
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [isGlitching, setIsGlitching] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
   const nextVideoRef = useRef<HTMLVideoElement>(null)
+  const nextAudioRef = useRef<HTMLAudioElement>(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isGlitching, setIsGlitching] = useState(false)
 
-  // Initial video load
+  // Initial video and audio load
   useEffect(() => {
     const video = videoRef.current
-    if (!video) return
+    const audio = audioRef.current
+    if (!video || !audio) return
 
     const handleLoad = () => {
       setIsLoaded(true)
-      video.play().catch(error => {
-        console.warn('Initial autoplay failed:', error)
+      // Set audio time to last 5 seconds
+      if (audio.duration) {
+        audio.currentTime = Math.max(0, audio.duration - 5)
+      }
+      
+      // Start both video and audio
+      Promise.all([
+        video.play(),
+        audio.play()
+      ]).catch(error => {
+        console.warn('Autoplay failed:', error)
       })
     }
 
-    // Force reload the video
     video.load()
+    audio.load()
     
     // Add event listeners
     video.addEventListener('loadeddata', handleLoad)
@@ -38,19 +51,23 @@ export function VideoPlayer() {
     }
   }, [])
 
-  // Preload next video
+  // Preload next video and audio
   useEffect(() => {
     const nextVideo = nextVideoRef.current
-    if (!nextVideo) return
+    const nextAudio = nextAudioRef.current
+    if (!nextVideo || !nextAudio) return
 
     nextVideo.src = currentVideo === '/vid1.mp4' ? '/talk.mp4' : '/vid1.mp4'
+    nextAudio.src = currentAudio === '/1.mp3' ? '/2.mp3' : '/1.mp3'
     nextVideo.load()
-  }, [currentVideo])
+    nextAudio.load()
+  }, [currentVideo, currentAudio])
 
   // Video end handling
   useEffect(() => {
     const video = videoRef.current
-    if (!video) return
+    const audio = audioRef.current
+    if (!video || !audio) return
 
     const handleEnded = () => {
       setIsGlitching(true)
@@ -68,15 +85,25 @@ export function VideoPlayer() {
 
       setTimeout(() => {
         setCurrentVideo(prev => prev === '/vid1.mp4' ? '/talk.mp4' : '/vid1.mp4')
+        setCurrentAudio(prev => prev === '/1.mp3' ? '/2.mp3' : '/1.mp3')
         setIsGlitching(false)
 
         const currentVideo = videoRef.current
-        if (currentVideo) {
-          currentVideo.load()
-          currentVideo.play().then(() => {
+        const currentAudio = audioRef.current
+        if (currentVideo && currentAudio) {
+          // Set audio time to last 5 seconds
+          if (currentAudio.duration) {
+            currentAudio.currentTime = Math.max(0, currentAudio.duration - 5)
+          }
+          
+          // Play both video and audio
+          Promise.all([
+            currentVideo.play(),
+            currentAudio.play()
+          ]).then(() => {
             setIsPlaying(true)
           }).catch(error => {
-            console.warn('Video autoplay failed:', error)
+            console.warn('Autoplay failed:', error)
           })
         }
       }, 800)
@@ -122,11 +149,21 @@ export function VideoPlayer() {
             src={currentVideo}
             onLoadedData={() => setIsLoaded(true)}
           />
+          {/* Hidden elements for preloading */}
           <video
             ref={nextVideoRef}
             className="hidden"
             preload="auto"
             muted
+          />
+          <audio
+            ref={audioRef}
+            src={currentAudio}
+          />
+          <audio
+            ref={nextAudioRef}
+            className="hidden"
+            preload="auto"
           />
         </div>
       </div>

@@ -7,6 +7,7 @@ export function VideoPlayer() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isGlitching, setIsGlitching] = useState(false)
   const nextVideoRef = useRef<HTMLVideoElement>(null)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   // Preload the next video
   useEffect(() => {
@@ -75,11 +76,14 @@ export function VideoPlayer() {
         <div className="relative">
           <video
             ref={videoRef}
-            className={`w-full aspect-video ${isGlitching ? 'glitch' : ''}`}
+            className={`w-full aspect-video ${isGlitching ? 'glitch' : ''} transition-opacity duration-500 ${
+              isLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
             autoPlay
             playsInline
             muted
             src={currentVideo}
+            onLoadedData={() => setIsLoaded(true)}
           />
           {/* Hidden video for preloading */}
           <video

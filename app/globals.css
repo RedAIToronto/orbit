@@ -164,7 +164,7 @@ body {
   }
 }
 
-@keyframes fade-in {
+@keyframes fade-up {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -176,7 +176,7 @@ body {
 }
 
 .animate-fade-in {
-  animation: fade-in 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fade-up 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* Add smooth scrolling to the whole page */
@@ -201,3 +201,28 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 255, 255, 0.7);
 }
+
+/* Add loading pulse animation */
+@keyframes loading-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading-pulse {
+  animation: loading-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Add stagger delays for children */
+.stagger > * {
+  opacity: 0;
+  animation: fade-up 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.stagger > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger > *:nth-child(4) { animation-delay: 0.4s; }

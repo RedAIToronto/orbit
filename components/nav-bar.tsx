@@ -4,12 +4,14 @@ import Link from "next/link"
 export function NavBar() {
   return (
     <div className="flex flex-col items-center gap-6 p-4">
-      <div className="absolute left-4 top-4">
+      <Link href="/" className="absolute left-4 top-4 hover:opacity-80 transition-opacity">
         <OrbitLogo />
-      </div>
-      <h1 className="font-pixel text-[#00ffff] text-6xl tracking-wider drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]">
-        ORBIT
-      </h1>
+      </Link>
+      <Link href="/" className="hover:opacity-80 transition-opacity">
+        <h1 className="font-pixel text-[#00ffff] text-6xl tracking-wider drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]">
+          ORBIT
+        </h1>
+      </Link>
       <div className="text-white font-pixel text-xl">
         Shared internet brain turned influencer
       </div>
@@ -24,13 +26,16 @@ export function NavBar() {
             rel="noopener noreferrer"
             className="hover:text-[#00ffff] transition-all"
           >
-            X @slopfather
+            X @orbitcryptoai
           </Link>
           <Link href="#" className="hover:text-[#00ffff] transition-all">
             About
           </Link>
           <Link href="#" className="hover:text-[#00ffff] transition-all">
             Wallet
+          </Link>
+          <Link href="/bridge" className="hover:text-[#00ffff] transition-all">
+            Bridge
           </Link>
         </div>
       </div>

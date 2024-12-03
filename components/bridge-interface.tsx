@@ -18,7 +18,7 @@ export function BridgeInterface() {
 
   return (
     <div className="max-w-md w-full mx-auto p-4">
-      <div className="bg-black/40 backdrop-blur-sm border border-[#00ffff] rounded-xl p-6">
+      <div className="border border-[#00ffff] rounded-xl p-6 backdrop-blur-sm">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-[#00ffff] font-pixel text-xl">ORBIT BRIDGE</h2>
           <WalletConnector />
@@ -27,7 +27,7 @@ export function BridgeInterface() {
         {/* From Chain - ORBIT on Solana */}
         <div className="space-y-2 mb-4">
           <label className="text-white/70 font-pixel text-sm">From (Solana)</label>
-          <div className="bg-black/60 border border-[#00ffff]/30 rounded-lg p-4">
+          <div className="border border-[#00ffff]/30 rounded-lg p-4 backdrop-blur-md">
             <div className="flex justify-between items-center">
               <input
                 type="number"
@@ -37,7 +37,7 @@ export function BridgeInterface() {
                 className="bg-transparent text-white text-2xl outline-none w-full"
                 disabled={isInitializing}
               />
-              <div className="flex items-center gap-2 px-3 py-1 rounded border border-white/20">
+              <div className="flex items-center gap-2 px-3 py-1 rounded border border-white/20 backdrop-blur-sm">
                 <Image
                   src="/orbit-logo.jpg"
                   alt="ORBIT"
@@ -57,7 +57,7 @@ export function BridgeInterface() {
         {/* Swap Direction Button */}
         <div className="flex justify-center -my-2 relative z-10">
           <button 
-            className="bg-black/60 border border-[#00ffff] rounded-full p-2 hover:bg-[#00ffff]/10 transition-all"
+            className="border border-[#00ffff] rounded-full p-2 hover:bg-[#00ffff]/10 transition-all backdrop-blur-sm"
             disabled={isInitializing}
           >
             <ArrowUpDown className="w-4 h-4 text-[#00ffff]" />
@@ -67,7 +67,7 @@ export function BridgeInterface() {
         {/* To Chain - Selected Network */}
         <div className="space-y-2 mb-6">
           <label className="text-white/70 font-pixel text-sm">To Network</label>
-          <div className="bg-black/60 border border-[#00ffff]/30 rounded-lg p-4">
+          <div className="border border-[#00ffff]/30 rounded-lg p-4 backdrop-blur-md">
             <div className="flex justify-between items-center">
               <input
                 type="number"
@@ -77,13 +77,13 @@ export function BridgeInterface() {
                 disabled
               />
               <select 
-                className="bg-black/60 text-white font-pixel px-3 py-1 rounded border border-white/20"
+                className="border border-white/20 text-white font-pixel px-3 py-1 rounded backdrop-blur-sm"
                 value={selectedToChain}
                 onChange={(e) => setSelectedToChain(e.target.value)}
                 disabled={isInitializing}
               >
                 {Object.entries(chains).map(([key, chain]) => (
-                  <option key={key} value={key}>
+                  <option key={key} value={key} className="bg-black/80">
                     {chain.icon}
                   </option>
                 ))}
@@ -99,7 +99,7 @@ export function BridgeInterface() {
         <button
           className={`w-full py-4 rounded-lg font-pixel text-lg relative overflow-hidden
             ${isInitializing 
-              ? 'bg-[#00ffff]/10 text-[#00ffff]/50 cursor-not-allowed'
+              ? 'border border-[#00ffff]/30 text-[#00ffff]/50 cursor-not-allowed backdrop-blur-sm'
               : 'bg-[#00ffff] text-black hover:bg-[#00ffff]/90 transition-all'
             }`}
           disabled={isInitializing}

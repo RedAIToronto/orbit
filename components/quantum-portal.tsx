@@ -50,17 +50,16 @@ export function QuantumPortal() {
     }
 
     function animate() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'
+      ctx.fillStyle = 'transparent'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
+      // Update and draw particles
       particles.forEach(particle => {
-        // Spiral motion
         particle.angle += 0.02
-        const radius = Math.sin(frame * 0.01) * 100 + 50
-        particle.x = centerX + Math.cos(particle.angle) * radius
-        particle.y = centerY + Math.sin(particle.angle) * radius
+        particle.x = centerX + Math.cos(particle.angle) * (100 + Math.sin(frame * 0.02) * 30)
+        particle.y = centerY + Math.sin(particle.angle) * (100 + Math.sin(frame * 0.02) * 30)
         
-        drawParticle(particle.x, particle.y, particle.size * (Math.sin(frame * 0.02) + 1.5))
+        drawParticle(particle.x, particle.y, particle.size)
       })
 
       // Create quantum connection lines
@@ -102,8 +101,6 @@ export function QuantumPortal() {
           ENTER THE BRIDGE
         </div>
       </div>
-      <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black to-transparent" />
     </div>
   )
 } 

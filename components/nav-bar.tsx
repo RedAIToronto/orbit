@@ -22,8 +22,8 @@ export function NavBar() {
       <Link href="/" className="hover:opacity-80 transition-opacity">
         <h1 className={`font-pixel text-[#00ffff] text-6xl tracking-wider
           animate-text-glow relative
-          after:content-['ORBIT'] after:absolute after:inset-0
-          after:text-[#00ffff] after:blur-[${glowIntensity}px]
+          after:content-['ORBIT'] after:absolute after:inset-0 
+          after:text-[#00ffff]/50 after:blur-[${glowIntensity}px]
           after:animate-pulse`}>
           ORBIT
         </h1>
@@ -56,7 +56,7 @@ export function NavBar() {
             About
           </button>
           <Link 
-            href="https://solscan.io/account/FuuufJNqmoWr2M4JiA7FFM5yKF6DgRpyLSMMwXhCYggQ"
+            href="https://solscan.io/account/DaF6cXFqByGVP1ZofohbGpx4f5BVCod8iAqyNK6vBd7b"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-[#00ffff] transition-all"

@@ -15,7 +15,7 @@ export function CyberElements() {
     if (!container) return
 
     // Create floating elements
-    const elements = Array.from({ length: 30 }, (_, i) => {
+    const elements = Array.from({ length: 30 }, () => {
       const el = document.createElement('div')
       el.className = 'absolute text-[#00ffff]/20 font-pixel text-sm pointer-events-none'
       el.style.left = `${Math.random() * 100}%`

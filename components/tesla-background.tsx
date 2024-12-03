@@ -2,6 +2,13 @@
 
 import { useEffect, useRef } from 'react'
 
+interface Particle {
+  x: number
+  y: number
+  speed: number
+  size: number
+}
+
 export function TeslaBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -15,7 +22,7 @@ export function TeslaBackground() {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
-    const particles: { x: number; y: number; speed: number; size: number }[] = []
+    const particles: Particle[] = []
 
     for (let i = 0; i < 50; i++) {
       particles.push({
@@ -27,6 +34,7 @@ export function TeslaBackground() {
     }
 
     function drawParticle(x: number, y: number, size: number) {
+      if (!ctx) return
       ctx.beginPath()
       ctx.moveTo(x, y)
       ctx.lineTo(x + size, y + size)
@@ -35,6 +43,7 @@ export function TeslaBackground() {
     }
 
     function animate() {
+      if (!ctx || !canvas) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       particles.forEach(particle => {
@@ -52,6 +61,7 @@ export function TeslaBackground() {
     animate()
 
     const handleResize = () => {
+      if (!canvas) return
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
     }

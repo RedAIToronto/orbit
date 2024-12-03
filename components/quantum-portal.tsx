@@ -139,8 +139,19 @@ export function QuantumPortal() {
         className="w-full h-full"
       />
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="font-pixel text-[#00ffff] text-2xl text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]">
-          ENTER THE BRIDGE
+        <div className="bg-black/40 backdrop-blur-sm px-8 py-4 rounded-lg border border-[#00ffff]/30
+          transform transition-all duration-500 group-hover:scale-110 group-hover:bg-black/60">
+          <div className="font-pixel text-[#00ffff] text-3xl text-center 
+            opacity-0 group-hover:opacity-100 transition-opacity duration-500 
+            drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]
+            relative after:content-['ENTER_THE_BRIDGE'] after:absolute after:inset-0 
+            after:text-[#00ffff]/50 after:blur-[8px] after:animate-pulse">
+            ENTER THE BRIDGE
+          </div>
+          <div className="text-[#00ffff]/50 text-sm font-pixel mt-2 text-center
+            opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+            Initialize Cross-Chain Protocol
+          </div>
         </div>
       </div>
     </div>

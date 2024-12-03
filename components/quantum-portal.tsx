@@ -19,17 +19,15 @@ export function QuantumPortal() {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    canvas.width = canvas.offsetWidth
-    canvas.height = canvas.offsetHeight
+    const ctx = canvas.getContext('2d')!
+    const width = canvas.width = canvas.offsetWidth
+    const height = canvas.height = canvas.offsetHeight
+    const centerX = width / 2
+    const centerY = height / 2
 
     const particles: Particle[] = []
     const particleCount = 200
     const maxSize = 2
-    const centerX = canvas.width / 2
-    const centerY = canvas.height / 2
 
     // Create particles in a circular pattern
     for (let i = 0; i < particleCount; i++) {
@@ -48,22 +46,19 @@ export function QuantumPortal() {
     let frame = 0
 
     function drawParticle(x: number, y: number, size: number) {
-      if (!ctx) return
-      ctx.beginPath()
       const gradient = ctx.createRadialGradient(x, y, 0, x, y, size)
       gradient.addColorStop(0, `hsla(${hue}, 100%, 50%, 1)`)
       gradient.addColorStop(1, `hsla(${hue}, 100%, 50%, 0)`)
       ctx.fillStyle = gradient
+      ctx.beginPath()
       ctx.arc(x, y, size, 0, Math.PI * 2)
       ctx.fill()
     }
 
     function animate() {
-      if (!ctx || !canvas) return
       ctx.fillStyle = 'transparent'
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      ctx.fillRect(0, 0, width, height)
 
-      // Update and draw particles
       particles.forEach(particle => {
         particle.angle += 0.02
         particle.x = centerX + Math.cos(particle.angle) * (100 + Math.sin(frame * 0.02) * 30)
@@ -72,7 +67,6 @@ export function QuantumPortal() {
         drawParticle(particle.x, particle.y, particle.size)
       })
 
-      // Create quantum connection lines
       ctx.beginPath()
       ctx.strokeStyle = `hsla(${hue}, 100%, 50%, 0.1)`
       particles.forEach((particle, i) => {
@@ -91,9 +85,10 @@ export function QuantumPortal() {
     animate()
 
     const handleResize = () => {
-      if (!canvas) return
-      canvas.width = canvas.offsetWidth
-      canvas.height = canvas.offsetHeight
+      const newWidth = canvas.offsetWidth
+      const newHeight = canvas.offsetHeight
+      canvas.width = newWidth
+      canvas.height = newHeight
     }
 
     window.addEventListener('resize', handleResize)
